@@ -109,3 +109,4 @@ dist/
 
 # Prisma
 prisma/migrations/backend/.env.bak.20251221-165323
+backend/.!53478!.env
