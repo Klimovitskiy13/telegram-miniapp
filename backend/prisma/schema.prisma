@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model onboarding_data {
+  id                  String   @id @default(uuid())
+  isCompleted         Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  userId              Int      @unique
+  goal                String?
+  activityLevel       String?
+  age                 Int?
+  gender              String?
+  height              Int?
+  weight              Float?
+  amr                 Float?
+  bmr                 Float?
+  carbs               Float?
+  fat                 Float?
+  protein             Float?
+  recommendedCalories Float?
+  users               users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model users {
+  telegramId          String               @unique
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  id                  Int                  @id @default(autoincrement())
+  firstName           String?
+  lastName            String?
+  photoUrl            String?
+  stepsGoal           Int                  @default(13000)
+  favorite_foods      favorite_food[]
+  food_entries        food_entry[]
+  onboarding_data     onboarding_data?
+  sleep_entries       sleep_entry[]
+  step_entries        step_entry[]
+  water_entries       water_entry[]
+  workout_entries     workout_entry[]
+  gamification_stats  gamification_stats?
+}
+
+model food_entry {
+  id          String   @id @default(uuid())
+  userId      Int
+  date        DateTime @default(now())
+  mealType    String
+  foodName    String
+  portionSize Float
+  unit        String
+  calories    Float?
+  protein     Float?
+  fat         Float?
+  carbs       Float?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model water_entry {
+  id        String   @id @default(uuid())
+  userId    Int
+  date      DateTime @default(now())
+  amount    Float
+  createdAt DateTime @default(now())
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model favorite_food {
+  id          String   @id @default(uuid())
+  userId      Int
+  foodName    String
+  portionSize Float
+  unit        String
+  calories    Float?
+  protein     Float?
+  fat         Float?
+  carbs       Float?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, foodName])
+  @@index([userId])
+}
+
+model step_entry {
+  id        String   @id @default(uuid())
+  userId    Int
+  date      DateTime @db.Date
+  steps     Int
+  source    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model sleep_entry {
+  id           String   @id @default(uuid())
+  userId       Int
+  date         DateTime @db.Date
+  minutes      Int
+  quality      Int?
+  sleepQuality String?  // Как спалось? (excellent, good, poor, very_poor)
+  sleepRest    String?  // Выспался ли? (fully, enough, not_enough, very_tired)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  users        users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model workout_entry {
+  id        String   @id @default(uuid())
+  userId    Int
+  date      DateTime @db.Date
+  type      String
+  category  String
+  minutes   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model gamification_stats {
+  id           String   @id @default(uuid())
+  userId       Int      @unique
+  // Физические статы
+  strength     Int      @default(0)
+  endurance    Int      @default(0)
+  flexibility  Int      @default(0)
+  agility      Int      @default(0)
+  speed        Int      @default(0)
+  reflex       Int      @default(0)
+  // Физиологические статы
+  hunger       Int      @default(0)
+  thirst       Int      @default(0)
+  sleepiness   Int      @default(0)
+  energy       Int      @default(0)
+  // Здоровье
+  health       Int      @default(100)
+  maxHealth    Int      @default(100)
+  // Уровень и опыт
+  level        Int      @default(1)
+  xp           Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  users        users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
