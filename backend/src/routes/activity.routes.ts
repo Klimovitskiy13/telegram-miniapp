@@ -26,7 +26,6 @@ import {
   getStepsMonth,
   getWorkoutsDay,
   getWorkoutsMonth,
-  getWorkoutsUntilDate,
 } from '../services/activity.service';
 
 const router = Router();
