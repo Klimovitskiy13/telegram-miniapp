@@ -2,7 +2,7 @@
  * API routes для шагов и сна
  */
 
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import logger from '../utils/logger';
 import { findOrCreateUser } from '../services/user.service';
@@ -39,7 +39,7 @@ const telegramUserSchema = z.object({
 });
 
 // Steps
-router.post('/steps', async (req, res) => {
+router.post('/steps', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { steps, date, source } = z
@@ -71,7 +71,7 @@ router.post('/steps', async (req, res) => {
   }
 });
 
-router.get('/steps', async (req, res) => {
+router.get('/steps', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -103,7 +103,7 @@ router.get('/steps', async (req, res) => {
   }
 });
 
-router.get('/steps/month', async (req, res) => {
+router.get('/steps/month', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -141,7 +141,7 @@ router.get('/steps/month', async (req, res) => {
   }
 });
 
-router.get('/workouts/month', async (req, res) => {
+router.get('/workouts/month', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -179,7 +179,7 @@ router.get('/workouts/month', async (req, res) => {
   }
 });
 
-router.get('/sleep/month', async (req, res) => {
+router.get('/sleep/month', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -217,7 +217,7 @@ router.get('/sleep/month', async (req, res) => {
   }
 });
 
-router.post('/steps/decrement', async (req, res) => {
+router.post('/steps/decrement', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { date } = z.object({ date: z.string().optional() }).parse(req.body);
@@ -243,7 +243,7 @@ router.post('/steps/decrement', async (req, res) => {
   }
 });
 
-router.put('/steps/:id', async (req, res) => {
+router.put('/steps/:id', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { steps } = z
@@ -273,7 +273,7 @@ router.put('/steps/:id', async (req, res) => {
   }
 });
 
-router.delete('/steps/:id', async (req, res) => {
+router.delete('/steps/:id', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -305,7 +305,7 @@ router.delete('/steps/:id', async (req, res) => {
 });
 
 // Sleep
-router.post('/sleep', async (req, res) => {
+router.post('/sleep', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { minutes, date, quality, sleepQuality, sleepRest } = z
@@ -339,7 +339,7 @@ router.post('/sleep', async (req, res) => {
   }
 });
 
-router.get('/sleep', async (req, res) => {
+router.get('/sleep', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -371,7 +371,7 @@ router.get('/sleep', async (req, res) => {
   }
 });
 
-router.put('/sleep/:id', async (req, res) => {
+router.put('/sleep/:id', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { minutes, quality, sleepQuality, sleepRest } = z
@@ -409,7 +409,7 @@ router.put('/sleep/:id', async (req, res) => {
   }
 });
 
-router.delete('/sleep/:id', async (req, res) => {
+router.delete('/sleep/:id', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -440,7 +440,7 @@ router.delete('/sleep/:id', async (req, res) => {
   }
 });
 
-router.post('/sleep/decrement', async (req, res) => {
+router.post('/sleep/decrement', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { date } = z.object({ date: z.string().optional() }).parse(req.body);
@@ -467,7 +467,7 @@ router.post('/sleep/decrement', async (req, res) => {
 });
 
 // Workouts
-router.post('/workouts', async (req, res) => {
+router.post('/workouts', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { type, category, minutes, date } = z
@@ -500,7 +500,7 @@ router.post('/workouts', async (req, res) => {
   }
 });
 
-router.get('/workouts', async (req, res) => {
+router.get('/workouts', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -532,7 +532,7 @@ router.get('/workouts', async (req, res) => {
   }
 });
 
-router.post('/workouts/decrement', async (req, res) => {
+router.post('/workouts/decrement', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { date } = z.object({ date: z.string().optional() }).parse(req.body);
@@ -558,7 +558,7 @@ router.post('/workouts/decrement', async (req, res) => {
   }
 });
 
-router.put('/workouts/:id', async (req, res) => {
+router.put('/workouts/:id', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const { type, category, minutes } = z
@@ -594,7 +594,7 @@ router.put('/workouts/:id', async (req, res) => {
   }
 });
 
-router.delete('/workouts/:id', async (req, res) => {
+router.delete('/workouts/:id', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;

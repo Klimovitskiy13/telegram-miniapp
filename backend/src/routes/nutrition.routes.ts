@@ -2,7 +2,7 @@
  * API routes для дневника питания
  */
 
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import {
   saveFoodEntry,
   getFoodEntries,
@@ -31,7 +31,7 @@ const router = Router();
  * POST /api/nutrition/food
  * Сохранение блюда в дневник
  */
-router.post('/food', async (req, res) => {
+router.post('/food', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
 
@@ -77,7 +77,7 @@ router.post('/food', async (req, res) => {
  * GET /api/nutrition/food
  * Получение блюд за день
  */
-router.get('/food', async (req, res) => {
+router.get('/food', async (req: Request, res: Response) => {
   try {
     // Для GET запросов получаем telegramUser из query параметров
     const telegramUserId = req.query.telegramUserId;
@@ -119,7 +119,7 @@ router.get('/food', async (req, res) => {
  * DELETE /api/nutrition/food/:id
  * Удаление блюда из дневника
  */
-router.delete('/food/:id', async (req, res) => {
+router.delete('/food/:id', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
 
@@ -150,7 +150,7 @@ router.delete('/food/:id', async (req, res) => {
  * POST /api/nutrition/water
  * Сохранение воды
  */
-router.post('/water', async (req, res) => {
+router.post('/water', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
 
@@ -188,7 +188,7 @@ router.post('/water', async (req, res) => {
  * GET /api/nutrition/water
  * Получение воды за день
  */
-router.get('/water', async (req, res) => {
+router.get('/water', async (req: Request, res: Response) => {
   try {
     // Для GET запросов получаем telegramUser из query параметров
     const telegramUserId = req.query.telegramUserId;
@@ -230,7 +230,7 @@ router.get('/water', async (req, res) => {
  * POST /api/nutrition/water/decrement
  * Уменьшить воду (удалить последнюю запись за день)
  */
-router.post('/water/decrement', async (req, res) => {
+router.post('/water/decrement', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
 
@@ -262,7 +262,7 @@ router.post('/water/decrement', async (req, res) => {
  * GET /api/nutrition/stats
  * Получение статистики питания за день
  */
-router.get('/stats', async (req, res) => {
+router.get('/stats', async (req: Request, res: Response) => {
   try {
     // Для GET запросов получаем telegramUser из query параметров
     const telegramUserId = req.query.telegramUserId;

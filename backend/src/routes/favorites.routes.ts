@@ -2,7 +2,7 @@
  * API routes для избранных продуктов
  */
 
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import logger from '../utils/logger';
 import { findOrCreateUser } from '../services/user.service';
@@ -32,7 +32,7 @@ const favoriteSchema = z.object({
 /**
  * GET /api/favorites
  */
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
 /**
  * POST /api/favorites/toggle
  */
-router.post('/toggle', async (req, res) => {
+router.post('/toggle', async (req: Request, res: Response) => {
   try {
     const telegramUser = telegramUserSchema.parse(req.body.telegramUser || req.body);
     const favorite = favoriteSchema.parse(req.body);
@@ -97,7 +97,7 @@ router.post('/toggle', async (req, res) => {
 /**
  * DELETE /api/favorites/:id
  */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   try {
     const telegramUserId = req.query.telegramUserId;
     const telegramUserName = req.query.telegramUserName;

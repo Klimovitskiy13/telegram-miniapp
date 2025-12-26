@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { randomUUID } from 'crypto';
 import { openAIService } from '../services/openai.service';
 import { foodDatabaseService } from '../services/food-database.service';
@@ -10,7 +10,7 @@ const router = Router();
  * POST /api/gpt/chat
  * Отправка сообщения в ChatGPT
  */
-router.post('/chat', async (req, res) => {
+router.post('/chat', async (req: Request, res: Response) => {
   const startTime = Date.now();
   const requestId = randomUUID();
   
@@ -105,7 +105,7 @@ router.post('/chat', async (req, res) => {
  * POST /api/gpt/analyze-image
  * Анализ фото еды через GPT-4 Vision
  */
-router.post('/analyze-image', async (req, res) => {
+router.post('/analyze-image', async (req: Request, res: Response) => {
   const startTime = Date.now();
   const requestId = randomUUID();
   

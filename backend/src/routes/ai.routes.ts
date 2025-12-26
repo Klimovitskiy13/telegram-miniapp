@@ -2,7 +2,7 @@
  * API routes для AI комментариев
  */
 
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { z } from 'zod';
 import logger from '../utils/logger';
 import { generateSleepComment, generateWorkoutComment, generateStepsComment } from '../services/ai.service';
@@ -17,7 +17,7 @@ const commentRequestSchema = z.object({
   short: z.boolean().default(false),
 });
 
-router.post('/generate-comment', async (req, res) => {
+router.post('/generate-comment', async (req: Request, res: Response) => {
   try {
     const { type, data, history7Days, history14Days, short } = commentRequestSchema.parse(req.body);
 

@@ -1,6 +1,5 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { findOrCreateUser, saveUserGoal, saveUserActivityLevel, saveUserProfile, saveUserNutritionData, saveUserNameAndPhoto, completeOnboarding, updateStepsGoal } from '../services/user.service';
-import { getOrCreateGamificationStats, updateGamificationStats } from '../services/gamification.service';
 import logger from '../utils/logger';
 import { toDatabaseHttpError } from '../utils/prisma';
 import { z } from 'zod';
@@ -19,7 +18,7 @@ const telegramUserSchema = z.object({
  * POST /api/users/check
  * Проверяет/создает пользователя по данным Telegram
  */
-router.post('/check', async (req, res) => {
+router.post('/check', async (req: Request, res: Response) => {
   try {
     // Валидация входных данных
     const telegramUser = telegramUserSchema.parse(req.body);
@@ -76,7 +75,7 @@ router.post('/check', async (req, res) => {
  * POST /api/users/goal
  * Сохраняет/обновляет цель пользователя
  */
-router.post('/goal', async (req, res) => {
+router.post('/goal', async (req: Request, res: Response) => {
   try {
     const { userId, goal } = z.object({
       userId: z.number(),
@@ -132,7 +131,7 @@ router.post('/goal', async (req, res) => {
  * POST /api/users/activity-level
  * Сохраняет/обновляет уровень активности пользователя
  */
-router.post('/activity-level', async (req, res) => {
+router.post('/activity-level', async (req: Request, res: Response) => {
   try {
     const { userId, activityLevel } = z.object({
       userId: z.number(),
@@ -188,7 +187,7 @@ router.post('/activity-level', async (req, res) => {
  * POST /api/users/profile
  * Сохраняет/обновляет профиль пользователя (пол, рост, вес, возраст)
  */
-router.post('/profile', async (req, res) => {
+router.post('/profile', async (req: Request, res: Response) => {
   try {
     const { userId, gender, height, weight, age } = z.object({
       userId: z.number(),
@@ -258,7 +257,7 @@ router.post('/profile', async (req, res) => {
  * POST /api/users/nutrition
  * Сохраняет/обновляет данные питания пользователя (BMR, AMR, калории, КБЖУ)
  */
-router.post('/nutrition', async (req, res) => {
+router.post('/nutrition', async (req: Request, res: Response) => {
   try {
     const { userId, bmr, amr, recommendedCalories, protein, fat, carbs } = z.object({
       userId: z.number(),
@@ -336,7 +335,7 @@ router.post('/nutrition', async (req, res) => {
  * POST /api/users/name-photo
  * Сохраняет/обновляет имя и фото пользователя
  */
-router.post('/name-photo', async (req, res) => {
+router.post('/name-photo', async (req: Request, res: Response) => {
   try {
     const { userId, firstName, lastName, photoUrl } = z.object({
       userId: z.number(),
@@ -402,7 +401,7 @@ router.post('/name-photo', async (req, res) => {
  * POST /api/users/complete-onboarding
  * Устанавливает флаг завершения онбординга
  */
-router.post('/complete-onboarding', async (req, res) => {
+router.post('/complete-onboarding', async (req: Request, res: Response) => {
   try {
     const { userId } = z.object({
       userId: z.number(),
@@ -454,7 +453,7 @@ router.post('/complete-onboarding', async (req, res) => {
  * POST /api/users/steps-goal
  * Обновляет цель по шагам пользователя
  */
-router.post('/steps-goal', async (req, res) => {
+router.post('/steps-goal', async (req: Request, res: Response) => {
   try {
     const { userId, stepsGoal } = z.object({
       userId: z.number(),
